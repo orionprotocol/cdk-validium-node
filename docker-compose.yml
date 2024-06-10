@@ -13,7 +13,7 @@ services:
         condition: service_healthy
       zkevm-sync:
         condition: service_started
-    image: zkevm-node
+    image: 0xpolygon/cdk-validium-node:0.6.4-cdk.6
     deploy:
       resources:
         limits:
@@ -23,6 +23,7 @@ services:
     ports:
       - 8545:8545
       - 9091:9091 # needed if metrics enabled
+    platform: linux/amd64
     environment:
       - ZKEVM_NODE_ETHERMAN_URL=${ZKEVM_NODE_ETHERMAN_URL}
     volumes:
@@ -38,9 +39,10 @@ services:
     depends_on:
       zkevm-state-db:
         condition: service_healthy
-    image: zkevm-node
+    image: 0xpolygon/cdk-validium-node:0.6.4-cdk.6
     ports:
       - 9092:9091 # needed if metrics enabled
+    platform: linux/amd64
     deploy:
       resources:
         limits:
@@ -67,6 +69,7 @@ services:
       retries: 5
     ports:
       - 5432:5432
+    platform: linux/amd64
     volumes:
       - ./db/scripts/init_prover_db.sql:/docker-entrypoint-initdb.d/init.sql
       - ${ZKEVM_NODE_STATEDB_DATA_DIR}:/var/lib/postgresql/data
@@ -93,6 +96,7 @@ services:
       retries: 5
     ports:
       - 5433:5432
+    platform: linux/amd64
     volumes:
       - ${ZKEVM_NODE_POOLDB_DATA_DIR}:/var/lib/postgresql/data
     environment:
@@ -114,6 +118,7 @@ services:
     ports:
       - 50061:50061 # MT
       - 50071:50071 # Executor
+    platform: linux/amd64
     volumes:
       - ${ZKEVM_ADVANCED_CONFIG_DIR:-./config/environments/${ZKEVM_NETWORK}}/prover.config.json:/usr/src/app/config.json
     command: >
