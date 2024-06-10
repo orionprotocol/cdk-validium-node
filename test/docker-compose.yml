@@ -47,7 +47,7 @@ services:
 
   zkevm-sequencer:
     container_name: zkevm-sequencer
-    image: zkevm-node
+    image: hermeznetwork/zkevm-node
     ports:
       - 9092:9091 # needed if metrics enabled
       - 6060:6060
@@ -57,6 +57,7 @@ services:
       - ZKEVM_NODE_POOL_DB_HOST=zkevm-pool-db
       - ZKEVM_NODE_MTCLIENT_URI=${ZKEVM_NODE_MTCLIENT_URI:-}
       - ZKEVM_NODE_EXECUTOR_URI=${ZKEVM_NODE_EXECUTOR_URI:-}
+    platform: linux/amd64
     volumes:
       - ./config/test.node.config.toml:/app/config.toml
       - ./config/test.genesis.config.json:/app/genesis.json
@@ -68,7 +69,7 @@ services:
 
   zkevm-sequencer-v1tov2:
     container_name: zkevm-sequencer-v1tov2
-    image: zkevm-node
+    image: hermeznetwork/zkevm-node
     ports:
       - 9092:9091 # needed if metrics enabled
       - 6060:6060
@@ -79,6 +80,7 @@ services:
       - ZKEVM_NODE_MTCLIENT_URI=${ZKEVM_NODE_MTCLIENT_URI:-}
       - ZKEVM_NODE_EXECUTOR_URI=${ZKEVM_NODE_EXECUTOR_URI:-}
       - ZKEVM_NODE_ETHERMAN_URL=http://zkevm-v1tov2-l1-network:8545
+    platform: linux/amd64
     volumes:
       - ./config/test.node.config.toml:/app/config.toml
       - ./config/test.genesis-v1tov2.config.json:/app/genesis.json
@@ -90,13 +92,14 @@ services:
 
   zkevm-sequence-sender:
     container_name: zkevm-sequence-sender
-    image: zkevm-node
+    image: hermeznetwork/zkevm-node
     environment:
       - ZKEVM_NODE_STATE_DB_HOST=zkevm-state-db
       - ZKEVM_NODE_POOL_DB_HOST=zkevm-pool-db
       - ZKEVM_NODE_SEQUENCER_SENDER_ADDRESS=0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
       - ZKEVM_NODE_MTCLIENT_URI=${ZKEVM_NODE_MTCLIENT_URI:-}
       - ZKEVM_NODE_EXECUTOR_URI=${ZKEVM_NODE_EXECUTOR_URI:-}
+    platform: linux/amd64
     volumes:
       - ./sequencer.keystore:/pk/sequencer.keystore
       - ./config/test.node.config.toml:/app/config.toml
@@ -108,7 +111,7 @@ services:
 
   zkevm-sequence-sender-v1tov2:
     container_name: zkevm-sequence-sender-v1tov2
-    image: zkevm-node
+    image: hermeznetwork/zkevm-node
     environment:
       - ZKEVM_NODE_STATE_DB_HOST=zkevm-state-db
       - ZKEVM_NODE_POOL_DB_HOST=zkevm-pool-db
@@ -116,6 +119,7 @@ services:
       - ZKEVM_NODE_MTCLIENT_URI=${ZKEVM_NODE_MTCLIENT_URI:-}
       - ZKEVM_NODE_EXECUTOR_URI=${ZKEVM_NODE_EXECUTOR_URI:-}
       - ZKEVM_NODE_ETHERMAN_URL=http://zkevm-v1tov2-l1-network:8545
+    platform: linux/amd64
     volumes:
       - ./sequencer.keystore:/pk/sequencer.keystore
       - ./config/test.node.config.toml:/app/config.toml
@@ -127,7 +131,7 @@ services:
 
   zkevm-json-rpc:
     container_name: zkevm-json-rpc
-    image: zkevm-node
+    image: hermeznetwork/zkevm-node
     ports:
       - 8123:8123
       - 8133:8133 # needed if WebSockets enabled
@@ -137,6 +141,7 @@ services:
       - ZKEVM_NODE_POOL_DB_HOST=zkevm-pool-db
       - ZKEVM_NODE_MTCLIENT_URI=${ZKEVM_NODE_MTCLIENT_URI:-}
       - ZKEVM_NODE_EXECUTOR_URI=${ZKEVM_NODE_EXECUTOR_URI:-}
+    platform: linux/amd64
     volumes:
       - ./config/test.node.config.toml:/app/config.toml
       - ./config/test.genesis.config.json:/app/genesis.json
@@ -147,7 +152,7 @@ services:
 
   zkevm-json-rpc-v1tov2:
     container_name: zkevm-json-rpc-v1tov2
-    image: zkevm-node
+    image: hermeznetwork/zkevm-node
     ports:
       - 8123:8123
       - 8133:8133 # needed if WebSockets enabled
@@ -158,6 +163,7 @@ services:
       - ZKEVM_NODE_MTCLIENT_URI=${ZKEVM_NODE_MTCLIENT_URI:-}
       - ZKEVM_NODE_EXECUTOR_URI=${ZKEVM_NODE_EXECUTOR_URI:-}
       - ZKEVM_NODE_ETHERMAN_URL=http://zkevm-v1tov2-l1-network:8545
+    platform: linux/amd64
     volumes:
       - ./config/test.node.config.toml:/app/config.toml
       - ./config/test.genesis-v1tov2.config.json:/app/genesis.json
@@ -168,13 +174,14 @@ services:
 
   zkevm-aggregator:
     container_name: zkevm-aggregator
-    image: zkevm-node
+    image: hermeznetwork/zkevm-node
     ports:
       - 50081:50081
       - 9093:9091 # needed if metrics enabled
     environment:
       - ZKEVM_NODE_STATE_DB_HOST=zkevm-state-db
       - ZKEVM_NODE_AGGREGATOR_SENDER_ADDRESS=0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+    platform: linux/amd64
     volumes:
       - ./config/test.node.config.toml:/app/config.toml
       - ./config/test.genesis.config.json:/app/genesis.json
@@ -185,7 +192,7 @@ services:
 
   zkevm-aggregator-v1tov2:
     container_name: zkevm-aggregator-v1tov2
-    image: zkevm-node
+    image: hermeznetwork/zkevm-node
     ports:
       - 50081:50081
       - 9093:9091 # needed if metrics enabled
@@ -194,6 +201,7 @@ services:
       - ZKEVM_NODE_AGGREGATOR_SENDER_ADDRESS=0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
       - ZKEVM_NODE_ETHERMAN_URL=http://zkevm-v1tov2-l1-network:8545
       - ZKEVM_NODE_AGGREGATOR_UPGRADEETROGBATCHNUMBER=2
+    platform: linux/amd64
     volumes:
       - ./config/test.node.config.toml:/app/config.toml
       - ./config/test.genesis-v1tov2.config.json:/app/genesis.json
@@ -204,13 +212,14 @@ services:
 
   zkevm-sync:
     container_name: zkevm-sync
-    image: zkevm-node
+    image: hermeznetwork/zkevm-node
     ports:
       - 9095:9091 # needed if metrics enabled
     environment:
       - ZKEVM_NODE_STATE_DB_HOST=zkevm-state-db
       - ZKEVM_NODE_MTCLIENT_URI=${ZKEVM_NODE_MTCLIENT_URI:-}
       - ZKEVM_NODE_EXECUTOR_URI=${ZKEVM_NODE_EXECUTOR_URI:-}
+    platform: linux/amd64
     volumes:
       - ./config/test.node.config.toml:/app/config.toml
       - ./config/test.genesis.config.json:/app/genesis.json
@@ -221,7 +230,7 @@ services:
 
   zkevm-sync-v1tov2:
     container_name: zkevm-sync-v1tov2
-    image: zkevm-node
+    image: hermeznetwork/zkevm-node
     ports:
       - 9095:9091 # needed if metrics enabled
     environment:
@@ -238,7 +247,7 @@ services:
       - "/app/zkevm-node run --network custom --custom-network-file /app/genesis.json --cfg /app/config.toml --components synchronizer"
   zkevm-eth-tx-manager:
     container_name: zkevm-eth-tx-manager
-    image: zkevm-node
+    image: hermeznetwork/zkevm-node
     ports:
       - 9094:9091 # needed if metrics enabled
     environment:
@@ -248,6 +257,7 @@ services:
       - ./aggregator.keystore:/pk/aggregator.keystore
       - ./config/test.node.config.toml:/app/config.toml
       - ./config/test.genesis.config.json:/app/genesis.json
+    platform: linux/amd64
     command:
       - "/bin/sh"
       - "-c"
@@ -255,9 +265,10 @@ services:
 
   zkevm-eth-tx-manager-v1tov2:
     container_name: zkevm-eth-tx-manager-v1tov2
-    image: zkevm-node
+    image: hermeznetwork/zkevm-node
     ports:
       - 9094:9091 # needed if metrics enabled
+    platform: linux/amd64
     environment:
       - ZKEVM_NODE_STATE_DB_HOST=zkevm-state-db
       - ZKEVM_NODE_ETHERMAN_URL=http://zkevm-v1tov2-l1-network:8545
@@ -273,13 +284,14 @@ services:
 
   zkevm-l2gaspricer:
     container_name: zkevm-l2gaspricer
-    image: zkevm-node
+    image: hermeznetwork/zkevm-node
     environment:
       - ZKEVM_NODE_POOL_DB_HOST=zkevm-pool-db
     volumes:
       - ./test.keystore:/pk/keystore
       - ./config/test.node.config.toml:/app/config.toml
       - ./config/test.genesis.config.json:/app/genesis.json
+    platform: linux/amd64
     command:
       - "/bin/sh"
       - "-c"
@@ -287,10 +299,11 @@ services:
 
   zkevm-l2gaspricer-v1tov2:
     container_name: zkevm-l2gaspricer-v1tov2
-    image: zkevm-node
+    image: hermeznetwork/zkevm-node
     environment:
       - ZKEVM_NODE_POOL_DB_HOST=zkevm-pool-db
       - ZKEVM_NODE_ETHERMAN_URL=http://zkevm-v1tov2-l1-network:8545
+    platform: linux/amd64
     volumes:
       - ./test.keystore:/pk/keystore
       - ./config/test.node.config.toml:/app/config.toml
@@ -311,6 +324,7 @@ services:
           memory: 1G
     ports:
       - 5432:5432
+    platform: linux/amd64
     volumes:
       - ../db/scripts/init_prover_db.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
@@ -333,6 +347,7 @@ services:
           memory: 1G
     ports:
       - 5433:5432
+    platform: linux/amd64
     environment:
       - POSTGRES_USER=pool_user
       - POSTGRES_PASSWORD=pool_password
@@ -353,6 +368,7 @@ services:
           memory: 1G
     ports:
       - 5435:5432
+    platform: linux/amd64
     volumes:
       - ../db/scripts/init_event_db.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
@@ -369,6 +385,7 @@ services:
     image: hermeznetwork/zkevm-explorer:latest
     ports:
       - 4000:4000
+    platform: linux/amd64
     environment:
       - NETWORK=ETH
       - SUBNETWORK=Local Ethereum
@@ -388,6 +405,7 @@ services:
     image: postgres:15
     ports:
       - 5436:5432
+    platform: linux/amd64
     environment:
       - POSTGRES_USER=l1_explorer_user
       - POSTGRES_PASSWORD=l1_explorer_password
@@ -402,6 +420,7 @@ services:
     image: hermeznetwork/zkevm-explorer:latest
     ports:
       - 4001:4000
+    platform: linux/amd64
     environment:
       - NETWORK=POE
       - SUBNETWORK=Polygon Hermez
@@ -424,6 +443,7 @@ services:
     ports:
       - 8124:8124
       - 8134:8134 # needed if WebSockets enabled
+    platform: linux/amd64
     environment:
       - ZKEVM_NODE_STATE_DB_HOST=zkevm-state-db
       - ZKEVM_NODE_POOL_DB_HOST=zkevm-pool-db
@@ -444,6 +464,7 @@ services:
     image: postgres:15
     ports:
       - 5437:5432
+    platform: linux/amd64
     environment:
       - POSTGRES_USER=l2_explorer_user
       - POSTGRES_PASSWORD=l2_explorer_password
@@ -456,6 +477,7 @@ services:
     ports:
       - 8545:8545
       - 8546:8546
+    platform: linux/amd64
     command:
       - "--http"
       - "--http.api"
@@ -486,6 +508,7 @@ services:
     ports:
       - 8545:8545
       - 8546:8546
+    platform: linux/amd64
     command:
       - "--http"
       - "--http.api"
@@ -516,6 +539,7 @@ services:
     ports:
       - 50061:50061 # MT
       - 50071:50071 # Executor
+    platform: linux/amd64
     volumes:
       - ./config/test.prover.config.json:/usr/src/app/config.json
     environment:
@@ -525,9 +549,10 @@ services:
 
   zkevm-approve:
     container_name: zkevm-approve
-    image: zkevm-node
+    image: hermeznetwork/zkevm-node
     environment:
       - ZKEVM_NODE_STATE_DB_HOST=zkevm-state-db
+    platform: linux/amd64
     volumes:
       - ./sequencer.keystore:/pk/keystore
       - ./config/test.node.config.toml:/app/config.toml
@@ -539,10 +564,11 @@ services:
 
   zkevm-approve-v1tov2:
     container_name: zkevm-approve-v1tov2
-    image: zkevm-node
+    image: hermeznetwork/zkevm-node
     environment:
       - ZKEVM_NODE_STATE_DB_HOST=zkevm-state-db
       - ZKEVM_NODE_ETHERMAN_URL=http://zkevm-v1tov2-l1-network:8545
+    platform: linux/amd64
     volumes:
       - ./sequencer.keystore:/pk/keystore
       - ./config/test.node.config.toml:/app/config.toml
@@ -563,6 +589,7 @@ services:
           memory: 1G
     ports:
       - 5434:5432
+    platform: linux/amd64
     volumes:
       - ../db/scripts/single_db_server.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
@@ -576,9 +603,10 @@ services:
 
   zkevm-permissionless-node:
     container_name: zkevm-permissionless-node
-    image: zkevm-node
+    image: hermeznetwork/zkevm-node
     ports:
       - 8125:8125
+    platform: linux/amd64
     environment:
       - ZKEVM_NODE_ISTRUSTEDSEQUENCER=false
       - ZKEVM_NODE_STATE_DB_USER=test_user
@@ -609,6 +637,7 @@ services:
       - 50059:50052 # Mock prover
       - 50068:50061 # MT
       - 50078:50071 # Executor
+    platform: linux/amd64
     volumes:
       - ./config/test.permissionless.prover.config.json:/usr/src/app/config.json
     environment:
@@ -622,6 +651,7 @@ services:
     restart: unless-stopped
     ports:
       - 9090:9090
+    platform: linux/amd64
     command:
       - --config.file=/etc/prometheus/prometheus.yml
       - --web.enable-lifecycle
@@ -630,12 +660,13 @@ services:
 
   zkevm-sh:
     container_name: zkevm-sh
-    image: zkevm-node
+    image: hermeznetwork/zkevm-node
     stdin_open: true
     tty: true
     environment:
       - ZKEVM_NODE_STATE_DB_HOST=zkevm-state-db
       - ZKEVM_NODE_POOL_DB_HOST=zkevm-pool-db
+    platform: linux/amd64
     volumes:
       - ./config/test.node.config.toml:/app/config.toml
       - ./config/test.genesis.config.json:/app/genesis.json
@@ -644,9 +675,10 @@ services:
 
   zkevm-node-forced-DAC:
     container_name: zkevm-node-forced-DAC
-    image: zkevm-node
+    image: hermeznetwork/zkevm-node
     ports:
       - 8125:8125
+    platform: linux/amd64
     environment:
       - ZKEVM_NODE_ISTRUSTEDSEQUENCER=false
       - ZKEVM_NODE_STATEDB_USER=test_user
@@ -681,6 +713,7 @@ services:
       retries: 5
     ports:
       - 5444:5432
+    platform: linux/amd64
     environment:
       - POSTGRES_USER=committee_user
       - POSTGRES_PASSWORD=committee_password
